@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wynn Villa — Payment Instructions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#26356F;
+    --ink-soft:#3B519E;
+    --sand:#F1EADB;
+    --sand-deep:#E5DCC5;
+    --card:#FFFFFF;
+    --brass:#3B519E;
+    --brass-dark:#2E4180;
+    --muted:#7C7565;
+    --line:#DCD2B8;
+    --good:#3C7A5E;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #FAF5EA 0%, transparent 60%),
+      var(--sand);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding:56px 20px 80px;
+  }
+
+  @media (prefers-reduced-motion: no-preference){
+    .rise{ animation: rise .7s cubic-bezier(.16,1,.3,1) both; }
+  }
+  @keyframes rise{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:translateY(0);} }
+
+  .wave{
+    width:100%;
+    max-width:640px;
+    height:28px;
+    margin-bottom:6px;
+    color:var(--brass);
+    opacity:.55;
+  }
+
+  header{
+    text-align:center;
+    max-width:640px;
+    margin-bottom:36px;
+  }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--brass-dark);
+    margin-bottom:14px;
+  }
+
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(16px, 5vw, 32px);
+    line-height:1.15;
+    margin:0 0 12px;
+    letter-spacing:-.01em;
+    white-space:nowrap;
+  }
+
+  header p{
+    color:var(--ink-soft);
+    font-size:clamp(13px, 3vw, 15px);
+    line-height:1.6;
+    margin:20px 0 0;
+    text-align:left;
+  }
+
+  .folio{
+    position:relative;
+    width:100%;
+    max-width:640px;
+    background:var(--card);
+    border-radius:18px;
+    box-shadow: 0 1px 2px rgba(18,52,59,.04), 0 24px 48px -24px rgba(18,52,59,.28);
+    border:1px solid var(--line);
+    overflow:hidden;
+  }
+
+  .folio::before, .folio::after{
+    content:"";
+    position:absolute;
+    width:26px; height:26px;
+    background:var(--sand);
+    border:1px solid var(--line);
+    border-radius:50%;
+    top:180px;
+    z-index:2;
+  }
+  .folio::before{ left:-14px; }
+  .folio::after{ right:-14px; }
+
+  .folio-head{
+    padding:28px 32px 24px;
+    background: #3B519E;
+    color:#F1EADB;
+  }
+
+  .folio-head .biz{
+    font-family:'Fraunces', serif;
+    font-size:21px;
+    font-weight:500;
+    margin:0 0 6px;
+  }
+
+  .folio-head .biz.center{
+    text-align:center;
+    margin:0;
+  }
+
+  .folio-head .biz-meta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    letter-spacing:.05em;
+    color:#B9C9C6;
+  }
+
+  .tear{
+    position:relative;
+    height:0;
+    border-top:2px dashed var(--line);
+    margin:0 26px;
+  }
+
+  .rows{
+    padding:10px 32px 30px;
+  }
+
+  .row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .row:last-child{ border-bottom:none; }
+
+  .row-text{
+    min-width:0;
+  }
+
+  .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:5px;
+  }
+
+  .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:15.5px;
+    font-weight:500;
+    color:var(--ink);
+    word-break:break-word;
+  }
+
+  .value.serif{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:16px;
+  }
+
+  .copy-btn{
+    flex:0 0 auto;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    background:transparent;
+    border:1px solid var(--brass);
+    color:var(--brass-dark);
+    font-family:'Work Sans', sans-serif;
+    font-size:13px;
+    font-weight:600;
+    padding:8px 14px;
+    border-radius:100px;
+    cursor:pointer;
+    transition: background .18s ease, color .18s ease, transform .12s ease, border-color .18s ease;
+  }
+
+  .copy-btn:hover{
+    background:var(--brass);
+    color:#FFFDF9;
+  }
+
+  .copy-btn:active{
+    transform:scale(.96);
+  }
+
+  .copy-btn:focus-visible{
+    outline:2px solid var(--ink);
+    outline-offset:2px;
+  }
+
+  .copy-btn svg{ width:14px; height:14px; flex:0 0 auto; }
+
+  .copy-btn.copied{
+    background:var(--good);
+    border-color:var(--good);
+    color:#fff;
+  }
+
+  .foot{
+    padding:20px 32px 30px;
+    background:var(--sand-deep);
+    border-top:1px solid var(--line);
+  }
+
+  .copy-all{
+    width:100%;
+    background:#3B519E;
+    color:var(--sand);
+    border:none;
+    border-radius:12px;
+    padding:14px 18px;
+    font-family:'Work Sans', sans-serif;
+    font-size:14.5px;
+    font-weight:600;
+    letter-spacing:.01em;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    transition: background .18s ease, transform .12s ease;
+  }
+  .copy-all:hover{ background:#2E4180; }
+  .copy-all:active{ transform:scale(.985); }
+  .copy-all.copied{ background:var(--good); }
+
+  .note{
+    text-align:center;
+    color:var(--muted);
+    font-size:12.5px;
+    margin:16px 0 0;
+    line-height:1.6;
+  }
+
+  .toast{
+    position:fixed;
+    bottom:28px;
+    left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--ink);
+    color:var(--sand);
+    padding:11px 20px;
+    border-radius:100px;
+    font-family:'Work Sans', sans-serif;
+    font-size:13.5px;
+    font-weight:500;
+    opacity:0;
+    pointer-events:none;
+    transition: opacity .22s ease, transform .22s ease;
+    box-shadow:0 12px 30px -10px rgba(18,52,59,.5);
+    z-index:10;
+  }
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+
+  @media (max-width:480px){
+    .folio-head, .rows, .foot{ padding-left:20px; padding-right:20px; }
+    .row{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .copy-btn{ align-self:flex-end; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="rise" style="animation-delay:.05s">
+    <h1>Payment details for Wynn Villa</h1>
+    <p>Please use the bank transfer details below to complete your payment.<br>For your convenience, simply tap the Copy button next to each field to avoid typing errors and ensure the payment details are entered accurately.</p>
+  </header>
+
+  <div class="folio rise" style="animation-delay:.12s">
+    <div class="folio-head">
+      <p class="biz center">International Wire Transfer Details</p>
+    </div>
+    <div class="tear"></div>
+    <div class="rows" id="rows">
+      <!-- rows injected by JS -->
+    </div>
+    <div class="foot">
+      <button class="copy-all" id="copyAll">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copy all details
+      </button>
+      <p class="note">Double‑check the SWIFT code and account number with your bank before sending an international transfer.</p>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Copied</div>
+
+<script>
+  const fields = [
+    { label: "Currency", value: "Thai Baht (THB)" },
+    { label: "Email", value: "admin@wynnvilla.com" },
+    { label: "Account Type", value: "Business" },
+    { label: "Name of Business / Organisation", value: "Wynn Villa Co,. Limited", serif:true },
+    { label: "Bank Name", value: "Siam Commercial Bank PLC" },
+    { label: "Swift Code", value: "SICOTHBK" },
+    { label: "Account Number", value: "699-300627-6" },
+    { label: "Country", value: "Thailand" },
+    { label: "City", value: "Meaung Prachuap Khiri Khan" },
+    { label: "Recipient Address", value: "68 Kongkiat Road" },
+    { label: "State", value: "Prachuap Khiri Khan" },
+    { label: "Post Code", value: "77000" }
+  ];
+
+  const rowsEl = document.getElementById('rows');
+  const toastEl = document.getElementById('toast');
+  let toastTimer;
+
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1600);
+  }
+
+  async function copyText(text){
+    try{
+      await navigator.clipboard.writeText(text);
+      return true;
+    }catch(e){
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try{ ok = document.execCommand('copy'); }catch(err){ ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+  }
+
+  const copyIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
+  const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+  fields.forEach((f, i) => {
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `
+      <div class="row-text">
+        <div class="label">${f.label}</div>
+        <div class="value${f.serif ? ' serif' : ''}">${f.value}</div>
+      </div>
+      <button class="copy-btn" data-index="${i}" aria-label="Copy ${f.label}">
+        ${copyIcon}<span>Copy</span>
+      </button>
+    `;
+    rowsEl.appendChild(row);
+  });
+
+  rowsEl.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.copy-btn');
+    if(!btn) return;
+    const idx = Number(btn.dataset.index);
+    const field = fields[idx];
+    const ok = await copyText(field.value);
+    if(ok){
+      const span = btn.querySelector('span');
+      const originalHTML = btn.innerHTML;
+      btn.innerHTML = `${checkIcon}<span>Copied</span>`;
+      btn.classList.add('copied');
+      showToast(`${field.label} copied`);
+      setTimeout(() => {
+        btn.innerHTML = originalHTML;
+        btn.classList.remove('copied');
+      }, 1400);
+    }
+  });
+
+  document.getElementById('copyAll').addEventListener('click', async (e) => {
+    const text = fields.map(f => `${f.label}: ${f.value}`).join('\n');
+    const ok = await copyText(text);
+    const btn = e.currentTarget;
+    if(ok){
+      const original = btn.innerHTML;
+      btn.innerHTML = `${checkIcon} All details copied`;
+      btn.classList.add('copied');
+      showToast('All payment details copied');
+      setTimeout(() => {
+        btn.innerHTML = original;
+        btn.classList.remove('copied');
+      }, 1600);
+    }
+  });
+</script>
+
+</body>
+</html>
